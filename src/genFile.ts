@@ -27,10 +27,8 @@ export const genFile = (
     },
   });
 
-  console.log(genPath, path.resolve(genPath || "", `${filename}.xlsx`));
-
   fs.writeFile(
-    path.resolve(genPath || "", `${filename}.xlsx`),
+    path.normalize(path.resolve(genPath || "", `${filename}.xlsx`)),
     buffer,
     (err) => {
       if (err) {
@@ -39,7 +37,9 @@ export const genFile = (
       }
       console.log("generate successfully \n");
       console.log("commit log excel path: \n");
-      console.log(path.resolve(genPath || "", `${filename}.xlsx`));
+      console.log(
+        path.normalize(path.resolve(genPath || "", `${filename}.xlsx`))
+      );
       console.log("\n");
     }
   );

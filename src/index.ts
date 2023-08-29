@@ -32,8 +32,12 @@ export const generateXlsx = async (args: ParsedArgs) => {
         o.endDate,
       ]),
     }));
+
     const buffer = branchCommitList.map((o) => ({
-      name: o.branch.replace("origin/", "").replace(/\\|\/|\?|\*|\[|\]/g, ""),
+      name: o.branch
+        .replace("origin/", "")
+        .replace(/\\|\/|\?|\*|\[|\]/g, "")
+        .slice(0, 31),
       data: [ExcelHeader, ...o.value],
       options: {} as WorkSheet["options"],
     }));
@@ -42,7 +46,7 @@ export const generateXlsx = async (args: ParsedArgs) => {
 
     genFile(
       buffer,
-      filename + "-" + dayjs().format("YYYY-MM-DD HH:mm:ss"),
+      filename + "___" + dayjs().format("YYYY-MM-DD"),
       exportPath
     );
   } catch (error) {

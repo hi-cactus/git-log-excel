@@ -13,14 +13,18 @@ export const getFileName = async () => {
     if (error) fok = false;
   }
 
-  const dirname = path.resolve().split("/").reverse()[0];
+  const dirname = path.posix
+    .resolve()
+    .replace(/\\/g, "/")
+    .split("/")
+    .reverse()[0];
 
   if (fok) {
     try {
       const data = await readFile(pkgPath, "utf-8");
       const pkg = JSON.parse(data);
 
-      return pkg!.name ?? dirname;
+      return `${dirname}___${pkg!.name ?? ""}`;
     } catch (error) {}
   }
 
