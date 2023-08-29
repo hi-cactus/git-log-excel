@@ -20,7 +20,7 @@
     "minimist": "^1.2.8",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2",
-    "xlsx": "./third_party/xlsx-0.19.3.tgz"
+    "xlsx": "./src/third_party/xlsx-0.19.3.tgz"
   },
   "devDependencies": {
     "@types/minimist": "^1.2.2",
