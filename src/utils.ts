@@ -2,7 +2,6 @@ import { ParsedArgs } from "minimist";
 import util from "node:util";
 import fs from "fs";
 
-const readFile = util.promisify(fs.readFile);
 const access = util.promisify(fs.access);
 
 export const isEmail = (email: string) => {

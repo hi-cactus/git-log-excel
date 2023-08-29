@@ -2,9 +2,7 @@
 
 const minimist = require("minimist");
 const pkg = require("./package.json");
-const { getCommits } = require("./lib/getCommits.js");
-const { genByEmail, generateXlsx } = require("./lib");
-const { getBranch } = require("./lib/getBranch");
+const { generateXlsx } = require("./lib");
 
 const args = minimist(process.argv.slice(2));
 const cmd = args._[0] || "";

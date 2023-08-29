@@ -1,7 +1,6 @@
 import { getCommits } from "./getCommits";
-import fs from "fs";
 import { ParsedArgs } from "minimist";
-import { genPath, getEmail, isEmail } from "./utils";
+import { genPath, getEmail } from "./utils";
 import { getBranch } from "./getBranch";
 import { ExcelHeader, genFile } from "./genFile";
 import { WorkSheet } from "node-xlsx";
@@ -34,7 +33,7 @@ export const generateXlsx = async (args: ParsedArgs) => {
       ]),
     }));
     const buffer = branchCommitList.map((o) => ({
-      name: o.branch.replace("origin/", ""),
+      name: o.branch.replace("origin/", "").replace(/\\|\/|\?|\*|\[|\]/g, ""),
       data: [ExcelHeader, ...o.value],
       options: {} as WorkSheet["options"],
     }));
