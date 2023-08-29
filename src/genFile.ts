@@ -16,8 +16,18 @@ export const genFile = (
   genPath: string | null | undefined = ""
 ) => {
   const buffer = xlsx.build(sheets, {
-    sheetOptions: {},
+    sheetOptions: {
+      "!cols": [
+        { wch: 40 },
+        { wch: 20 },
+        { wch: 30 },
+        { wch: 20 },
+        { wch: 20 },
+      ],
+    },
   });
+
+  console.log(genPath, path.resolve(genPath || "", `${filename}.xlsx`));
 
   fs.writeFile(
     path.resolve(genPath || "", `${filename}.xlsx`),
@@ -29,8 +39,8 @@ export const genFile = (
       }
       console.log("generate successfully \n");
       console.log("commit log excel path: \n");
-
       console.log(path.resolve(genPath || "", `${filename}.xlsx`));
+      console.log("\n");
     }
   );
 };
