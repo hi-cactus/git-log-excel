@@ -11,17 +11,16 @@
     "glog": "bin"
   },
   "files": [
-    "lib",
-    "third_party"
+    "lib"
   ],
   "author": "",
   "license": "MIT",
   "dependencies": {
     "dayjs": "^1.11.9",
     "minimist": "^1.2.8",
+    "node-xlsx": "^0.23.0",
     "tslib": "^2.6.2",
-    "typescript": "^5.2.2",
-    "xlsx": "./third_party/xlsx-0.19.3.tgz"
+    "typescript": "^5.2.2"
   },
   "devDependencies": {
     "@types/minimist": "^1.2.2",

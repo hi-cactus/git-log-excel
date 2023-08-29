@@ -3,7 +3,7 @@ import { ParsedArgs } from "minimist";
 import { genPath, getEmail } from "./utils";
 import { getBranch } from "./getBranch";
 import { ExcelHeader, genFile } from "./genFile";
-import { WorkSheet } from "./node-xlsx/lib";
+import { WorkSheet } from "node-xlsx";
 import { getFileName } from "./getFileName";
 import dayjs from "dayjs";
 
@@ -42,7 +42,7 @@ export const generateXlsx = async (args: ParsedArgs) => {
 
     genFile(
       buffer,
-      filename + dayjs().format("YYYY-MM-DD HH:mm:ss"),
+      filename + "-" + dayjs().format("YYYY-MM-DD HH:mm:ss"),
       exportPath
     );
   } catch (error) {
