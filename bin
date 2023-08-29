@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+
+const minimist = require("minimist");
+const pkg = require("./package.json");
+const { getCommits } = require("./lib/getCommits.js");
+const { genByEmail, generateXlsx } = require("./lib");
+const { getBranch } = require("./lib/getBranch");
+
+const args = minimist(process.argv.slice(2));
+const cmd = args._[0] || "";
+
+const command =
+  args.version || args.v ? "version" : args.help || args.h ? "help" : cmd;
+
+switch (command) {
+  case "version":
+    console.log(`${pkg.version}`);
+    break;
+  default:
+    generateXlsx(args);
+    break;
+}
