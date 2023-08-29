@@ -1,4 +1,4 @@
-import xlsx, { WorkSheet } from "./third_party/node-xlsx/lib";
+import xlsx, { WorkSheet } from "./node-xlsx/lib";
 import fs from "fs";
 import path from "path";
 

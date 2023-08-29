@@ -3,7 +3,7 @@ import { ParsedArgs } from "minimist";
 import { genPath, getEmail } from "./utils";
 import { getBranch } from "./getBranch";
 import { ExcelHeader, genFile } from "./genFile";
-import { WorkSheet } from "./third_party/node-xlsx/lib";
+import { WorkSheet } from "./node-xlsx/lib";
 import { getFileName } from "./getFileName";
 import dayjs from "dayjs";
 
