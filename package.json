@@ -1,7 +1,12 @@
 {
   "name": "git-log-excel",
   "version": "1.0.8",
-  "description": "",
+  "description": "export git commits to excel",
+  "keywords": [
+    "git commit",
+    "git log",
+    "excel"
+  ],
   "main": "lib/index.js",
   "scripts": {
     "tsc": "tsc",
@@ -13,11 +18,19 @@
   "files": [
     "lib"
   ],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hi-cactus/git-log-excel.git"
+  },
+  "homepage": "https://github.com/hi-cactus/git-log-excel",
+  "author": {
+    "name": "hi-cactus!"
+  },
   "license": "MIT",
   "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.0.0",
     "dayjs": "^1.11.9",
-    "minimist": "^1.2.8",
     "node-xlsx": "^0.23.0",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2"

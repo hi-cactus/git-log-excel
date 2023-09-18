@@ -1,6 +1,7 @@
 import { ParsedArgs } from "minimist";
 import util from "node:util";
 import fs from "fs";
+import chalk from "chalk";
 
 const access = util.promisify(fs.access);
 
@@ -10,32 +11,48 @@ export const isEmail = (email: string) => {
   );
 };
 
-export const getEmail = (args: ParsedArgs) => {
-  if (args.email) {
-    if (typeof args.email === "string" && isEmail(args.email)) {
-      console.log("commit author email " + args.email);
-      return args.email;
+export const getEmail = (email?: string) => {
+  if (email) {
+    if (typeof email === "string" && isEmail(email)) {
+      console.log("commit author email " + email);
+      return email;
     } else
       console.log(
-        "Please enter a valid e-mail! ---" + args.email,
-        ". Email has ignored!"
+        chalk.yellow("Warning ") + " Please enter a valid e-mail! --- " + email,
+        ". email argument has ignored!"
       );
   }
   return null;
 };
 
-export const genPath = async (args: ParsedArgs) => {
-  if (args.exportPath) {
-    if (typeof args.exportPath === "string") {
+export const getOverDate = (overDate?: string) => {
+  if (overDate) {
+    if (/^\d{2}\:\d{2}(\:\d{2})?$/.test(overDate)) return overDate;
+    else
+      console.log(
+        chalk.yellow("Warning ") + " Please enter a valid time! ---" + overDate,
+        ". over date has set to default value: 18:30:30 "
+      );
+  }
+  return "18:30:00";
+};
+
+export const genPath = async (exportPath?: string) => {
+  if (exportPath) {
+    if (typeof exportPath === "string") {
       let fok = true;
       try {
-        await access(args.exportPath, fs.constants.F_OK);
+        await access(exportPath, fs.constants.F_OK);
       } catch (error) {
         if (error) fok = false;
       }
-      return fok ? args.exportPath : null;
+      return fok ? exportPath : null;
     } else {
-      console.log("Please enter a valid path! " + ". Export Path has ignored!");
+      console.log(
+        chalk.yellow("Warning ") +
+          " Please enter a valid path! " +
+          ". Export Path has ignored!"
+      );
     }
   }
 

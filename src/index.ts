@@ -1,24 +1,36 @@
 import { getCommits } from "./getCommits";
-import { ParsedArgs } from "minimist";
-import { genPath, getEmail } from "./utils";
+import { genPath, getEmail, getOverDate } from "./utils";
 import { getBranch } from "./getBranch";
 import { ExcelHeader, genFile } from "./genFile";
 import { WorkSheet } from "node-xlsx";
 import { getFileName } from "./getFileName";
 import dayjs from "dayjs";
 
-export const generateXlsx = async (args: ParsedArgs) => {
-  try {
-    const email = getEmail(args);
+interface Params {
+  email?: string;
+  exportPath?: string;
+  overDate?: string;
+  overDateName?: string;
+}
 
-    const exportPath = await genPath(args);
+export const generateXlsx = async ({
+  email: e,
+  exportPath: p,
+  overDate: o,
+  overDateName = "Hours over 18:30",
+}: Params) => {
+  try {
+    const email = getEmail(e);
+    const overDate = getOverDate(o);
+
+    const exportPath = await genPath(p);
 
     const branchList = await getBranch();
 
     if (!branchList) return;
 
     const draftDate = await Promise.allSettled(
-      branchList.map((o) => getCommits(o, email))
+      branchList.map((o) => getCommits(o, email, overDate))
     );
 
     const branchCommitList = draftDate.map((o, idx) => ({
@@ -38,7 +50,7 @@ export const generateXlsx = async (args: ParsedArgs) => {
         .replace("origin/", "")
         .replace(/\\|\/|\?|\*|\[|\]/g, "")
         .slice(0, 31),
-      data: [ExcelHeader, ...o.value],
+      data: [[...ExcelHeader, overDateName], ...o.value],
       options: {} as WorkSheet["options"],
     }));
 

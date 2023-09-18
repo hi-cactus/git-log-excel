@@ -18,7 +18,8 @@ export interface Commit {
 
 export const getCommits = async (
   branch = "",
-  email: string | null | undefined = ""
+  email: string | null | undefined = "",
+  overDate = "18:30:00"
 ) => {
   try {
     const { stdout, stderr } = await exec(`git log ${branch}`);
@@ -37,6 +38,7 @@ export const getCommits = async (
           .map((o) => o.trim())
           .filter((o) => !!o)
       );
+
     return commits
       ?.reduce((c, n) => {
         if (n.length < 2) return c;
@@ -51,15 +53,11 @@ export const getCommits = async (
 
         let end = -1;
 
-        const a = (() => {
-          return 1;
-        })();
-
         if (draftDate) {
           const startDate = dayjs(
             `${formatDate.year()}-${
               formatDate.month() + 1
-            }-${formatDate.date()} 18:30:00`
+            }-${formatDate.date()} ${overDate}`
           );
 
           end = dayjs.duration(formatDate.diff(startDate)).as("hours");
@@ -73,7 +71,6 @@ export const getCommits = async (
             email: author?.split(" <")?.[1]?.replace(">", "") ?? "",
             message: msgs?.join(),
             date: draftDate && formatDate.format("YYYY-MM-DD HH:mm:ss"),
-
             endDate: end < 0 ? "" : end?.toFixed(2) ?? "",
           },
         ];
