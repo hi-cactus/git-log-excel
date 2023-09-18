@@ -5,6 +5,7 @@ import { ExcelHeader, genFile } from "./genFile";
 import { WorkSheet } from "node-xlsx";
 import { getFileName } from "./getFileName";
 import dayjs from "dayjs";
+import ora from "ora";
 
 interface Params {
   email?: string;
@@ -13,6 +14,11 @@ interface Params {
   overDateName?: string;
 }
 
+const spinner = ora({
+  text: "Generating...",
+  spinner: "bouncingBar",
+});
+
 export const generateXlsx = async ({
   email: e,
   exportPath: p,
@@ -20,6 +26,7 @@ export const generateXlsx = async ({
   overDateName = "Hours over 18:30",
 }: Params) => {
   try {
+    spinner.start();
     const email = getEmail(e);
     const overDate = getOverDate(o);
 
@@ -63,5 +70,7 @@ export const generateXlsx = async ({
     );
   } catch (error) {
     console.log(error);
+  } finally {
+    spinner.stop();
   }
 };

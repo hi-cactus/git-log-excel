@@ -63,6 +63,10 @@ export const getCommits = async (
           end = dayjs.duration(formatDate.diff(startDate)).as("hours");
         }
 
+        //TODO 若当天有多次提及记录, 则只显示最后一条over date记录,
+        //当天小计, 与当前branch 汇总
+        // 
+
         return [
           ...c,
           {
