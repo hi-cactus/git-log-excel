@@ -1,6 +1,6 @@
 {
   "name": "git-log-excel",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "export git commits to excel",
   "keywords": [
     "git commit",
