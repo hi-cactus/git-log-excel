@@ -29,7 +29,7 @@
   "license": "MIT",
   "dependencies": {
     "chalk": "^4.1.2",
-    "commander": "^11.0.0",
+    "commander": "^10.0.1",
     "dayjs": "^1.11.9",
     "node-xlsx": "^0.23.0",
     "ora": "5",
@@ -39,5 +39,8 @@
   "devDependencies": {
     "@types/minimist": "^1.2.2",
     "@types/node": "^20.5.7"
+  },
+  "engines": {
+    "node": ">=14"
   }
 }
