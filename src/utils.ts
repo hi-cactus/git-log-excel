@@ -14,7 +14,6 @@ export const isEmail = (email: string) => {
 export const getEmail = (email?: string) => {
   if (email) {
     if (typeof email === "string" && isEmail(email)) {
-      console.log("commit author email " + email);
       return email;
     } else
       console.log(
