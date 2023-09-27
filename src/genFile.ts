@@ -7,8 +7,8 @@ export const ExcelHeader = [
   "Commit ID",
   "Author name",
   "Author email",
-  "Submit date",
-  "Submit information",
+  "Commit date",
+  "Commit message",
 ];
 export const genFile = (
   sheets: WorkSheet<unknown>[],
@@ -22,6 +22,7 @@ export const genFile = (
         { wch: 20 },
         { wch: 30 },
         { wch: 20 },
+        { wch: 40 },
         { wch: 20 },
       ],
     },

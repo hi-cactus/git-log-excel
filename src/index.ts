@@ -64,6 +64,11 @@ export const generateXlsx = async ({
           }-${formatDate.date()} ${overDate}`
         );
 
+        const diff = dayjs
+          .duration(formatDate.diff(startDate))
+          .as("hours")
+          .toFixed(2);
+
         //TODO 若当天有多次提及记录, 则只显示最后一条over date记录,
         //当天小计, 与当前branch 汇总
         //
@@ -71,9 +76,9 @@ export const generateXlsx = async ({
           o.hash,
           o.author_name,
           o.author_email,
-          o.date,
+          formatDate.format("YYYY-MM-DD HH:mm:ss"),
           o.message,
-          dayjs.duration(formatDate.diff(startDate)).as("hours").toFixed(2),
+          Number(diff ?? 0) > 0 ? diff : "",
         ];
       }),
     }));
@@ -91,7 +96,7 @@ export const generateXlsx = async ({
 
     genFile(
       buffer,
-      filename + "___" + dayjs().format("YYYY-MM-DD"),
+      filename + "___" + dayjs().format("YYYY-MM-DD") + "___" + Date.now(),
       exportPath
     );
   } catch (error) {
