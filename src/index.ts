@@ -1,11 +1,13 @@
-import { getCommits } from "./getCommits";
-import { genPath, getEmail, getOverDate } from "./utils";
-import { getBranch } from "./getBranch";
-import { ExcelHeader, genFile } from "./genFile";
+import ora from "ora";
+import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
+import { simpleGit } from "simple-git";
 import { WorkSheet } from "node-xlsx";
 import { getFileName } from "./getFileName";
-import dayjs from "dayjs";
-import ora from "ora";
+import { ExcelHeader, genFile } from "./genFile";
+import { genPath, getEmail, getOverDate } from "./utils";
+
+dayjs.extend(duration);
 
 interface Params {
   email?: string;
@@ -32,24 +34,48 @@ export const generateXlsx = async ({
 
     const exportPath = await genPath(p);
 
-    const branchList = await getBranch();
+    const git = simpleGit();
 
-    if (!branchList) return;
+    const branchSummary = await git.branch(["-r"]);
 
-    const draftDate = await Promise.allSettled(
-      branchList.map((o) => getCommits(o, email, overDate))
+    const defaultLogOption = [`--no-merges`];
+
+    const logResultSettled = await Promise.allSettled(
+      branchSummary.all.map(
+        async (b) =>
+          await git.log(
+            [
+              `${b}`,
+              ...defaultLogOption,
+              email ? `--author=${email}` : "",
+            ].filter((o) => o)
+          )
+      )
     );
 
-    const branchCommitList = draftDate.map((o, idx) => ({
-      branch: branchList[idx],
-      value: (o.status === "fulfilled" ? o.value : []).map((o) => [
-        o.id,
-        o.name,
-        o.email,
-        o.date,
-        o.message,
-        o.endDate,
-      ]),
+    const branchCommitList = logResultSettled.map((o, idx) => ({
+      branch: branchSummary.all[idx],
+      value: (o.status === "fulfilled" ? o.value.all : []).map((o) => {
+        const formatDate = dayjs(o.date);
+
+        const startDate = dayjs(
+          `${formatDate.year()}-${
+            formatDate.month() + 1
+          }-${formatDate.date()} ${overDate}`
+        );
+
+        //TODO 若当天有多次提及记录, 则只显示最后一条over date记录,
+        //当天小计, 与当前branch 汇总
+        //
+        return [
+          o.hash,
+          o.author_name,
+          o.author_email,
+          o.date,
+          o.message,
+          dayjs.duration(formatDate.diff(startDate)).as("hours").toFixed(2),
+        ];
+      }),
     }));
 
     const buffer = branchCommitList.map((o) => ({
