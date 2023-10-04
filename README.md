@@ -1,10 +1,10 @@
 # git-log-excel
 
-[![Language TypeScript](https://img.shields.io/badge/language-typescript-brightgreen?style=flat-square)](https://github.com/hi-cactus/git-log-excel)
-[![GitHub release](https://img.shields.io/github/package-json/v/hi-cactus/git-log-excel?style=flat-square)](https://github.com/hi-cactus/git-log-excel/releases)
-[![License MIT](https://img.shields.io/github/license/Wimjiang/utility?style=flat-square)](https://github.com/hi-cactus/git-log-excel)
-
-> export git commits to excel
+[![Language TypeScript](https://img.shields.io/badge/language-typescript-brightgreen)](https://github.com/hi-cactus/git-log-excel)
+[![GitHub release](https://img.shields.io/github/package-json/v/hi-cactus/git-log-excel)](https://github.com/hi-cactus/git-log-excel/releases?logo=github)
+[![License MIT](https://img.shields.io/github/license/hi-cactus/utility)](https://github.com/hi-cactus/git-log-excel)
+[![npm version](https://img.shields.io/npm/v/git-log-excel?logo=npm)](https://img.shields.io/npm/v/git-log-excel?logo=npm)
+> export git log to excel
 
 ### Installing
 
