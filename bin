@@ -7,15 +7,17 @@ const { program } = require("commander");
 program
   .name("glog")
   .description("export git log to excel")
-  .version(pkg.version, "-v, --version")
 
-  .option("-e, --email <email>", "export excel path")
-  .option("-ep, --exportPath <exportPath>", "filter by committer email")
+  .option("-e, --email <email>", "filter by committer email")
+  .option("-b, --branch <branch>", "filter by branch")
+  .option("-r, --repo <repo>", "git repo url")
+  .option("-ep, --exportPath <exportPath>", "set export path")
   .option("-d, --overDate <overDate>", "set hour over date")
   .option(
     "-dn, --overDateName <overDateName>",
     "set hour over date name in excel column"
   )
+  .version(pkg.version, "-v, --version")
   .action((options) => {
     generateXlsx(options);
   });

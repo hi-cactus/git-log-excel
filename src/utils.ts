@@ -12,16 +12,7 @@ export const isEmail = (email: string) => {
 };
 
 export const getEmail = (email?: string) => {
-  if (email) {
-    if (typeof email === "string" && isEmail(email)) {
-      return email;
-    } else
-      console.log(
-        chalk.yellow("Warning ") + " Please enter a valid e-mail! --- " + email,
-        ". email argument has ignored!"
-      );
-  }
-  return null;
+  return email && typeof email === "string" && isEmail(email) ? email : null;
 };
 
 export const getOverDate = (overDate?: string) => {

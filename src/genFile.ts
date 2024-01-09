@@ -1,7 +1,6 @@
 import xlsx, { WorkSheet } from "node-xlsx";
-import fs from "fs";
 import path from "path";
-import chalk from "chalk";
+import { writeFile } from "fs/promises";
 
 export const ExcelHeader = [
   "Commit ID",
@@ -10,7 +9,7 @@ export const ExcelHeader = [
   "Commit date",
   "Commit message",
 ];
-export const genFile = (
+export const genFile = async (
   sheets: WorkSheet<unknown>[],
   filename: string,
   genPath: string | null | undefined = ""
@@ -32,14 +31,5 @@ export const genFile = (
     path.resolve(genPath || "", `${filename}.xlsx`)
   );
 
-  fs.writeFile(excelPath, buffer, (err) => {
-    if (err) {
-      console.log(chalk.red("generate .xlsx failed \n"), err);
-      return;
-    }
-    console.log(chalk.green("\nglog: generate excel successfully \n"));
-    console.log(chalk.green("commit log excel path:"));
-    console.log(chalk.green(excelPath));
-    console.log("\n");
-  });
+  await writeFile(excelPath, buffer);
 };
