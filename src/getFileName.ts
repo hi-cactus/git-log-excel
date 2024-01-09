@@ -16,8 +16,6 @@ export const getFileName = async () => {
 
     return `${dirname}___${pkg!.name ?? ""}`;
   } catch (error) {
-    console.log(error);
-    
     return dirname;
   }
 };

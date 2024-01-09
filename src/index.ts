@@ -97,9 +97,6 @@ export const generateXlsx = async ({
       )
     );
 
-    console.log(logResultSettled, '---');
-    
-
     const branchCommitList = logResultSettled.map((o, idx) => ({
       branch: branchList[idx],
       value: (o.status === "fulfilled" ? o.value.all : []).map((o) => {
