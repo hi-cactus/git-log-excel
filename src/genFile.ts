@@ -1,6 +1,10 @@
 import xlsx, { WorkSheet } from "node-xlsx";
 import path from "path";
-import { writeFile } from "fs/promises";
+import fs from "fs";
+
+import util from "node:util";
+
+const writeFile = util.promisify(fs.writeFile);
 
 export const ExcelHeader = [
   "Commit ID",

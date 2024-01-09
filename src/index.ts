@@ -6,8 +6,12 @@ import { WorkSheet } from "node-xlsx";
 import { getFileName } from "./getFileName";
 import { ExcelHeader, genFile } from "./genFile";
 import { genPath, getEmail, getOverDate } from "./utils";
-import { mkdir, rm } from "fs/promises";
+import fs from "fs";
 import path from "path";
+import util from "node:util";
+
+const mkdir = util.promisify(fs.mkdir);
+const rm = util.promisify(fs.rm);
 
 dayjs.extend(duration);
 
