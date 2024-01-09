@@ -21,6 +21,25 @@ cd your-git-project
 glog
 ```
 
+### Options
+
+```bash
+
+Usage: glog [options]
+
+export git log to excel
+
+Options:
+  -e, --email <email>                 filter by committer email
+  -b, --branch <branch>               filter by branch
+  -r, --repo <repo>                   git repo url
+  -ep, --exportPath <exportPath>      set export path
+  -d, --overDate <overDate>           set hour over date
+  -dn, --overDateName <overDateName>  set hour over date name in excel column
+  -v, --version                       output the version number
+  -h, --help                          display help for command
+```
+
 filter by committer email
 
 ```bash
