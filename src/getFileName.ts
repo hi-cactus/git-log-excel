@@ -4,14 +4,20 @@ import util from "node:util";
 
 const readFile = util.promisify(fs.readFile);
 
-export const getFileName = async () => {
-  const pkgPath = path.resolve("./package.json");
-
+export const getFileName = async (repo?: string) => {
   const dirname = path.posix
     .resolve()
     .replace(/\\/g, "/")
     .split("/")
     .reverse()[0];
+
+  if (repo) {
+    return (
+      repo.match(/\/(\w|\-)+\.git/g)?.[0]?.replace(/\/|\.git/g, "") || dirname
+    );
+  }
+
+  const pkgPath = path.resolve("./package.json");
 
   try {
     const data = await readFile(pkgPath, "utf-8");

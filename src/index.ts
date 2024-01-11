@@ -1,14 +1,14 @@
 import ora from "ora";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
+import fs from "fs";
+import path from "path";
+import util from "node:util";
 import { BranchSummary, simpleGit } from "simple-git";
 import { WorkSheet } from "node-xlsx";
 import { getFileName } from "./getFileName";
 import { ExcelHeader, genFile } from "./genFile";
 import { genPath, getEmail, getOverDate } from "./utils";
-import fs from "fs";
-import path from "path";
-import util from "node:util";
 
 const mkdir = util.promisify(fs.mkdir);
 const rm = util.promisify(fs.rm);
@@ -59,6 +59,8 @@ export const generateXlsx = async ({
     } else {
       branchSummary = await git.branch(["-r"]);
     }
+
+    const nextRepo = await git.listRemote(["--get-url", "origin"]);
 
     const email = getEmail(e);
 
@@ -147,7 +149,7 @@ export const generateXlsx = async ({
     }));
 
     const filename =
-      (await getFileName()) +
+      (await getFileName(repo || nextRepo)) +
       "___" +
       dayjs().format("YYYY-MM-DD") +
       "___" +
